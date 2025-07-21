@@ -1,0 +1,27 @@
+
+crop_rotation_game/
+│
+├── main.py                    # Entry point, runs the game loop
+├── game/
+│   ├── __init__.py
+│   ├── engine.py              # Game loop and state manager
+│   ├── player.py              # Player profile, favor, seeds, decisions
+│   ├── plot.py                # Crop plots and their state
+│   ├── seed.py                # Seed types, tiers, mods
+│   ├── harvest.py             # Logic for harvesting and crafting
+│   ├── rotation.py            # Crop rotation planning and optimization
+│   └── utils.py               # Helper functions, e.g. input validation
+│
+├── data/
+│   └── seed_types.json        # Seed data (tiers, types, mods)
+│
+├── ui/
+│   ├── __init__.py
+│   ├── terminal_ui.py         # Handles printing menus, prompts
+│   └── display_helpers.py     # Formatting tables, colors
+│
+├── tests/
+│   ├── test_plot.py
+│   └── test_rotation.py
+│
+└── README.md
