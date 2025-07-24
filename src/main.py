@@ -4,9 +4,9 @@ from plot import Plot
 from grove import Grove
 
 def handle_input(state):
-    clear_screen()
-    grove = state.get("grove")
-    print(grove.render())
+    # clear_screen()
+    # grove = state.get("grove")
+    # print(grove.render())
     command = input("Type 1 to harvest, 2 for instructions, 3 to quit> ").strip().lower()
     return command
 
@@ -15,31 +15,31 @@ def clear_screen():
 
 def update(command, state):
     clear_screen()
-
     grove = state.get("grove")
-
     print(state["grove"].render())
 
-    if command == "quit":
+    if command == "3":
         state["running"] = False
 
     elif command == "1":
         try:
             crop_id = int(input("Enter the Crop Number you want to harvest: "))
-            grove.plot.harvest(crop_id)
+            if crop_id < 1 or crop_id > len(grove.plots) * 2:
+                print(f"Invalid Crop ID: must be between 1 and {len(grove.plots) * 2}")
+                return
+            plot_id = (crop_id - 1) // 2
+            grove.plots[plot_id].harvest(crop_id)
+            grove.upgrade(crop_id)
         except ValueError:
             print("Invalid input: Please enter a numeric Crop ID.")
             return
-        for plot in grove.plots:
-            crop_ids = [plot.left_crop.id, plot.right_crop.id]
-            if crop_id in crop_ids:
-                plot.harvest(crop_id)
-                print(f"Harvested crop ID #{crop_id} in Plot.")
-                break
-        else:
-            print(f"No crop found with ID {crop_id}.")
-    else:
-        print(f"Unknown command: {command}")
+
+    elif command == "2":
+        grove.upgrade(1)
+
+    clear_screen()
+    grove = state.get("grove")
+    print(state["grove"].render())
 
 def main():
     state = {

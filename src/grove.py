@@ -10,5 +10,11 @@ class Grove:
         output = [f"+-----------------------------PLOT 1----------------------------------------+"]
         for plot in self.plots:
             output.extend(plot.render())
-            output.append(f"+-----------------------------PLOT {plot.id + 1}----------------------------------------+")
+            output.append(f"+-----------------------------PLOT {plot.id + 2}----------------------------------------+")
         return "\n".join(output)
+
+    def upgrade(self, crop_id):
+        for plot in self.plots:
+            for crop in plot.crops:
+                if crop.id != crop_id:
+                    crop.t4_count += 400

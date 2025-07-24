@@ -7,6 +7,7 @@ class Crop:
         "primal": "\033[96m",
         "vivid": "\033[93m",
         "wild": "\033[95m",
+        "wilted": "\033[90m",
         "reset": "\033[0m"
     }
 
