@@ -28,8 +28,9 @@ def update(command, state):
                 print(f"Invalid Crop ID: must be between 1 and {len(grove.plots) * 2}")
                 return
             plot_id = (crop_id - 1) // 2
-            grove.plots[plot_id].harvest(crop_id)
-            grove.upgrade(crop_id)
+            harvested_crop = grove.plots[plot_id].harvest(crop_id)
+            grove.upgrade(harvested_crop)
+
         except ValueError:
             print("Invalid input: Please enter a numeric Crop ID.")
             return
@@ -53,8 +54,6 @@ def main():
     while state["running"]:
         command = handle_input(state)
         update(command, state)
-
-    print("game over")
 
 if __name__ == "__main__":
     main()

@@ -18,6 +18,13 @@ class Plot:
         right_lines = self.right_crop.render()
         return [f"{l:<40} | {r:<40}" for l, r in zip(left_lines, right_lines)]
 
+    def wilt(self, crop):
+        crop.state = 'wilted'
+        crop.t1_count = 0
+        crop.t2_count = 0
+        crop.t3_count = 0
+        crop.t4_count = 0
+
     def harvest(self, crop_id):
         if self.left_crop.id == crop_id:
             harvested_crop = self.left_crop
@@ -25,12 +32,9 @@ class Plot:
         elif self.right_crop.id == crop_id:
             harvested_crop = self.right_crop
             sibling_crop = self.left_crop
-        harvested_crop.state = 'wilted'
-        harvested_crop.plant = 'wilted'
-        harvested_crop.t1_count = 0
-        harvested_crop.t2_count = 0
-        harvested_crop.t3_count = 0
-        harvested_crop.t4_count = 0
-        # handle sibling living
-        sibling_crop.t1_count = sibling_crop.t1_count + 200
+        self.wilt(harvested_crop)
+        roll = random.random()
+        if roll >= .6:
+            self.wilt(sibling_crop)
+        return harvested_crop
     
