@@ -6,7 +6,7 @@ class Grove:
         ### Use this for final
         # self.plot_count = random.randint(3, 5)
         ### Use this for testing
-        self.plot_count = 3
+        self.plot_count = 6
         self.plots = [Plot() for _ in range(self.plot_count)]
         self.vivid_lifeforce = 0
         self.primal_lifeforce = 0
