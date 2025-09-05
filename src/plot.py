@@ -28,7 +28,7 @@ class Plot:
     def harvest(self, crop_id):
         if self.left_crop.id == crop_id:
             harvested_crop = self.left_crop
-            sibling_crop = self.right_crop2
+            sibling_crop = self.right_crop
         elif self.right_crop.id == crop_id:
             harvested_crop = self.right_crop
             sibling_crop = self.left_crop
