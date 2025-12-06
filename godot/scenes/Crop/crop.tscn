@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://dkeubgnae2gtj"]
+
+[ext_resource type="Texture2D" uid="uid://82alehmt4pic" path="res://assets/foliage/PNG/Flat/sprite_0001.png" id="1_gur7x"]
+[ext_resource type="Script" uid="uid://bklcqp2m5ci2m" path="res://scenes/Crop/crop.gd" id="2_oc1nr"]
+
+[node name="Crop" type="Node2D"]
+script = ExtResource("2_oc1nr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_gur7x")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
