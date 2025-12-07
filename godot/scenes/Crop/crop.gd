@@ -1,6 +1,8 @@
 extends Node2D
 class_name Crop
+
 var seed_value: int = 0
+
 var target_crop: Crop
 
 var original_modulate: Color
@@ -12,7 +14,7 @@ func _ready():
 	$Label.text = str(seed_value) + ' lifeforce'
 	var label: Label = $Label
 	
-	var scale_factor = 0.1
+	var scale_factor = 0.2
 	sprite.scale = Vector2(scale_factor, scale_factor)
 	
 	if sprite.texture:

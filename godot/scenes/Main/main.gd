@@ -1,13 +1,16 @@
 extends Node2D
 
 var rng := RandomNumberGenerator.new()
+
 var Crop := preload("res://scenes/Crop/crop.tscn")
+var Plot := preload("res://scenes/Plot/plot.tscn")
+
 var target_crop: Crop
 
+const NUM_PLOTS := 5
+const BORDER_WIDTH := 3
 
-func _ready():
-	print('main ready')
-	print("Window size: ", get_viewport_rect().size)
+func _ready():	
 	rng.randomize()
 	
 	var crop1 = Crop.instantiate()
