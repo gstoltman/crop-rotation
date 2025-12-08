@@ -1,20 +1,33 @@
 extends Node2D
 class_name Crop
+var rng := RandomNumberGenerator.new()
 
-var seed_value: int = 0
+var t1_seed_value: int = 0
+var t2_seed_value: int = 0
+var t3_seed_value: int = 0
+var t4_seed_value: int = 0
+var crop_color: Color
 
 var target_crop: Crop
 
-var original_modulate: Color
+var crop_status = 'Alive'
 
 func _ready():
+	rng.randomize()
+	
 	var sprite := $Sprite2D
 	var collision: CollisionShape2D = $Area2D/CollisionShape2D
 	
-	$Label.text = str(seed_value) + ' lifeforce'
+	var keys = Constants.CROP.keys()
+	var crop_type = keys[rng.randi_range(0, keys.size() - 1)]
+	crop_color = Constants.CROP[crop_type]
+	
+	$Sprite2D.modulate = crop_color
+	
+	$Label.text = 'T1: ' + str(t1_seed_value) + ' lifeforce\n' + 'T2: ' + str(t1_seed_value) + ' lifeforce\n'
 	var label: Label = $Label
 	
-	var scale_factor = 0.2
+	var scale_factor = 0.1
 	sprite.scale = Vector2(scale_factor, scale_factor)
 	
 	if sprite.texture:
@@ -27,28 +40,30 @@ func _ready():
 			collision.shape = RectangleShape2D.new()
 		
 		collision.shape.size = texture_size * scale_factor
-		
-	original_modulate = $Sprite2D.modulate
 
 func update_label():
-	$Label.text = str(seed_value) + " lifeforce"
+	$Label.text = 'T1: ' + str(t1_seed_value) + ' lifeforce\n' + 'T2: ' + str(t1_seed_value) + ' lifeforce\n'
 	
 func update_color_wilted():
-	$Sprite2D.modulate = Color(.5, .5, .5)
+	$Sprite2D.modulate = Color(.25, .25, .25)
 
 func _on_area_2d_mouse_entered() -> void:
-	$Sprite2D.modulate = Color(1.0, 0.8, 0.8)
+	if self.crop_status != 'Wilted':
+		$Sprite2D.modulate = Color(0.278, 1.0, 0.0, 1.0)
 
 func _on_area_2d_mouse_exited() -> void:
-	$Sprite2D.modulate = original_modulate
+	if self.crop_status != 'Wilted':
+		$Sprite2D.modulate = crop_color
 
 func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			seed_value += 5
-			update_label()
-			
-			if target_crop != null:
-				target_crop.update_color_wilted()
-				target_crop.seed_value = 0
-				target_crop.update_label()
+	if self.crop_status != 'Wilted':
+		if event is InputEventMouseButton:
+			if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+				if target_crop.crop_status != 'Wilted':
+					target_crop.t1_seed_value += 5
+					target_crop.update_label()
+				
+				self.update_color_wilted()
+				self.t1_seed_value = 0
+				self.crop_status = 'Wilted'
+				self.update_label()
